@@ -1,0 +1,26 @@
+{
+  "name": "nes-bootstrap",
+  "version": "1.0.0",
+  "description": "Simple NES bootstrap project for C",
+  "main": "game.nes",
+  "scripts": {
+    "build": "./compile",
+    "watch": "nodemon --exec 'npm run build' --watch src -e c,h,s,chr",
+    "serve": "http-server",
+    "start": "run-p build serve watch"
+  },
+  "keywords": [
+    "NES",
+    "8-bit",
+    "C",
+    "cc65",
+    "Nintendo"
+  ],
+  "author": "Jesse Luoto",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "nodemon": "^1.14.11",
+    "npm-run-all": "^4.1.2"
+  }
+}
