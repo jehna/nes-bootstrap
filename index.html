@@ -1,0 +1,95 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
+  <style>
+    html {
+      min-height: 100%;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    canvas {
+      image-rendering: pixelated;
+      background: #000;
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body bgcolor="#CCC" onload="init()">
+  <script>
+    async function init() {
+      const canvas = createCanvas(256, 240)
+      const ctx = canvas.getContext('2d')
+      const onFrame = writeFrameToCanvas(ctx)
+      const nes = new jsnes.NES({ onFrame, onAudioSample })
+      nes.ppu.clipToTvSize = false
+
+      const game = await loadGame('./game.nes')
+      playGame(game, nes)
+    }
+
+
+    function createCanvas (width, height) {
+      const c = document.createElement('canvas')
+      c.width = width
+      c.height = height
+      document.body.appendChild(c)
+      return c
+    }
+
+    const BITMASK_RED = 0xFF
+    const BITMASK_GREEN = 0xFF00
+    const BITMASK_BLUE = 0xFF0000
+    const OFFSET_GREEN = 8
+    const OFFSET_BLUE = 16
+
+    function writeFrameToCanvas (context) {
+      return function writeFrameBuffer (frameBuffer) {
+        const arr = new Uint8ClampedArray(frameBuffer.length * 4)
+
+        for (let i = 0; i < frameBuffer.length; i++) {
+          arr[i * 4] = frameBuffer[i] & BITMASK_RED
+          arr[i * 4 + 1] = (frameBuffer[i] & BITMASK_GREEN) >>> OFFSET_GREEN
+          arr[i * 4 + 2] = (frameBuffer[i] & BITMASK_BLUE) >>> OFFSET_BLUE
+          arr[i * 4 + 3] = 0xFF
+        }
+
+        const d = new ImageData(arr, 256, 240)
+        context.putImageData(d, 0, 0)
+      }
+    }
+
+    function onAudioSample(left, right) {
+      // TODO: play audio sample
+    }
+
+    async function loadGame (filename) {
+      const response = await fetch(filename)
+      const romData = await response.blob()
+      return new Promise(done => {
+        const f = new FileReader()
+        f.onloadend = () => done(f.result)
+        f.readAsBinaryString(romData)
+      })
+    }
+
+    function playGame (rom, nes) {
+      nes.loadROM(rom)
+      function loop () {
+        nes.frame()
+        requestAnimationFrame(loop)
+      }
+      loop()
+    }
+
+    // Hook up whatever input device you have to the controller.
+    /*nes.buttonDown(1, jsnes.Controller.BUTTON_A);
+    nes.frame();
+    nes.buttonUp(1, jsnes.Controller.BUTTON_A);
+    nes.frame();*/
+  </script>
+</body>
+</html>
