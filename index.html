@@ -27,6 +27,7 @@
       const nes = new jsnes.NES({ onFrame, onAudioSample })
       nes.ppu.clipToTvSize = false
 
+      bindKeys(nes)
       const game = await loadGame('./game.nes')
       playGame(game, nes)
     }
@@ -85,11 +86,34 @@
       loop()
     }
 
-    // Hook up whatever input device you have to the controller.
-    /*nes.buttonDown(1, jsnes.Controller.BUTTON_A);
-    nes.frame();
-    nes.buttonUp(1, jsnes.Controller.BUTTON_A);
-    nes.frame();*/
+    function whichToJsnesButton (which) {
+      switch(which) {
+        case 37:
+          return jsnes.Controller.BUTTON_LEFT;
+        case 39:
+          return jsnes.Controller.BUTTON_RIGHT;
+        case 38:
+          return jsnes.Controller.BUTTON_UP;
+        case 38:
+          return jsnes.Controller.BUTTON_DOWN;
+        case 65:
+          return jsnes.Controller.BUTTON_A;
+        case 83:
+          return jsnes.Controller.BUTTON_B;
+      }
+    }
+
+    function bindKey(event, method, target) {
+      document.addEventListener(event, function (e) {
+        e.preventDefault()
+        target[method](1, whichToJsnesButton(e.which))
+      });
+    }
+
+    function bindKeys(nes) {
+      bindKey('keydown', 'buttonDown', nes)
+      bindKey('keyup', 'buttonUp', nes)
+    }
   </script>
 </body>
 </html>

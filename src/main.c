@@ -1,8 +1,23 @@
 #include "../nes.h"
 #include "main.h"
+#include <stdbool.h>
+
+struct ControllerInput {
+  bool A;
+  bool B;
+  bool Select;
+  bool Start;
+  bool Up;
+  bool Down;
+  bool Left;
+  bool Right;
+  bool test;
+};
 
 unsigned int frameCount;
 unsigned int index;
+struct ControllerInput player1Input;
+unsigned int playerPosition = 0;
 const unsigned char TEXT[]={"Hello World!"};
 const unsigned char PALETTE[]={
   PALETTE_COLOR_LIGHT_GRAY,
@@ -25,6 +40,8 @@ void vBlank () {
     PPU_VRAM_IO = TEXT[index];
   }
 
+  readInput();
+
   ++frameCount;
   updateCharacterPos();
   copyRamToPpu();
@@ -33,8 +50,29 @@ void vBlank () {
   RETURN_FROM_INTERRUPT();
 }
 
+void readInput(void) {
+  sendReadInputSignalToControllers();
+  player1Input.A = APU_PAD1 & 1;
+  player1Input.B = APU_PAD1 & 1;
+  player1Input.Select = APU_PAD1 & 1;
+  player1Input.Start = APU_PAD1 & 1;
+  player1Input.Up = APU_PAD1 & 1;
+  player1Input.Down = APU_PAD1 & 1;
+  player1Input.Left = APU_PAD1 & 1;
+  player1Input.Right = APU_PAD1 & 1;
+}
+
+void sendReadInputSignalToControllers () {
+  SET_16BIT_VALUE_TO_POINTER(APU_PAD1, 0x0100);
+}
+
 void updateCharacterPos (void) {
-  SPRITES[1].xPos = SPRITES[0].xPos = frameCount + 0x80;
+  if (player1Input.Right) {
+    ++playerPosition;
+  } else if (player1Input.Left) {
+    --playerPosition;
+  }
+  SPRITES[1].xPos = SPRITES[0].xPos = playerPosition + 0x80;
 }
 
 void copyRamToPpu (void) {
