@@ -1,11 +1,3 @@
-void turnOffScreen(void);
-void turnOnScreen(void);
-void resetScrollPosition(void);
-void loadPalette(void);
-void waitNmiFlag(void);
-void vBlank (void);
-void readInput(void);
-void updateCharacterPos(void);
-void copyRamToPpu(void);
-void sendReadInputSignalToControllers(void);
-void drawCharacter(void);
+void update(void);
+void start(void);
+void mainLoop(void);

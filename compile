@@ -3,8 +3,8 @@
 mkdir -p tmp
 
 # cc65 -Oi --add-source src/main.c -o tmp/main.s
-cc65 --add-source src/main.c -o tmp/main.s
+find src -name *.c | xargs -I {} sh -c 'cc65 -Oirs --add-source {} -o tmp/`basename {} .c`.s'
 ca65 src/import_binary_files.s -o tmp/import_binary_files.o
-ca65 tmp/main.s
+find tmp -name *.s | xargs -I {} ca65 {}
 
-ld65 -C nes.cfg -o game.nes tmp/import_binary_files.o tmp/main.o nes.lib
+ld65 -C nes.cfg -o game.nes tmp/*.o nes.lib

@@ -1,0 +1,1 @@
+void loadDefaultPalettes(void);
