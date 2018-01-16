@@ -12,6 +12,11 @@ struct ControllerInput {
   bool test;
 };
 
-extern struct ControllerInput player1Input;
+struct AllInputs {
+  struct ControllerInput player1;
+  struct ControllerInput player2;
+};
+
+extern struct AllInputs Input;
 
 void readControllerInputs(void);

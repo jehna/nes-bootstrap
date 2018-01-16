@@ -5,4 +5,4 @@ struct Sprite {
   unsigned char xPos;
 };
 
-extern struct Sprite SPRITES[64];
+extern struct Sprite Sprites[64];

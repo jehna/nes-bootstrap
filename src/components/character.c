@@ -5,12 +5,12 @@
 unsigned int playerPosition = 0;
 
 void updateCharacterPos (void) {
-  if (player1Input.Right) {
+  if (Input.player1.Right) {
     ++playerPosition;
-  } else if (player1Input.Left) {
+  } else if (Input.player1.Left) {
     --playerPosition;
   }
-  SPRITES[1].xPos = SPRITES[0].xPos = playerPosition + 0x80;
+  Sprites[1].xPos = Sprites[0].xPos = playerPosition + 0x80;
 }
 
 void updateCharacter(void) {
@@ -18,15 +18,15 @@ void updateCharacter(void) {
 }
 
 void drawCharacter(void) {
-  SPRITES[0].xPos = 0x80;
-  SPRITES[0].yPos = 0x80;
-  SPRITES[0].spriteIndex = 0x01;
-  SPRITES[0].flags = 0x00;
+  Sprites[0].xPos = 0x80;
+  Sprites[0].yPos = 0x80;
+  Sprites[0].spriteIndex = 0x01;
+  Sprites[0].flags = 0x00;
 
-  SPRITES[1].xPos = 0x80;
-  SPRITES[1].yPos = 0x88;
-  SPRITES[1].spriteIndex = 0x11;
-  SPRITES[1].flags = 0x00;
+  Sprites[1].xPos = 0x80;
+  Sprites[1].yPos = 0x88;
+  Sprites[1].spriteIndex = 0x11;
+  Sprites[1].flags = 0x00;
 }
 
 void startCharacter(void) {
