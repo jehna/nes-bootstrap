@@ -1,13 +1,13 @@
 ; This file only acts as a bridge between the Famitone 2 tracker and the C code.
 
-.export _synchronizeMusicToFrame, _initMusic, _playSong, _stopSong, _playSoundEffect, _initSoundEffects
+.export _synchronizeMusicToFrame, _initMusic, _playSong, _stopSong, _playSoundEffect, _initSoundEffects, _playSample
 .import musicData, soundEffectData, _famitoneVariablePointer
 
 ; Settings:
 .define FT_BASE_ADR     $0400	; page in the RAM used for FT2 variables, should be $xx00
 .define FT_DPCM_OFF     $c000	; $c000..$ffc0, 64-byte steps
 .define FT_SFX_STREAMS  4     ; number of sound effects played at once, 1..4
-.define FT_DPCM_ENABLE  0     ; undefine to exclude all DMC code
+.define FT_DPCM_ENABLE  1     ; undefine to exclude all DMC code
 .define FT_SFX_ENABLE   1     ; undefine to exclude all sound effects code
 .define FT_THREAD       1     ; undefine if you are calling sound effects from the same thread as the sound update call
 .define FT_PAL_SUPPORT  1     ; undefine to exclude PAL support
@@ -46,4 +46,8 @@ _stopSong:
 
 _playSoundEffect:
   JMP FamiToneSfxPlay
+  RTS
+
+_playSample:
+  JMP FamiToneSamplePlay
   RTS
