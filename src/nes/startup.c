@@ -2,6 +2,7 @@
 #include "../main.h"
 #include "controller.h"
 #include "utils.h"
+#include "sounds.h"
 
 
 void callMainUpdateFunction () {
@@ -12,6 +13,7 @@ void callMainUpdateFunction () {
  * vBlank gets called once per frame.
  */
 void vBlank () {
+  synchronizeMusicToFrame();
   readControllerInputs();
 
   callMainUpdateFunction();
@@ -29,6 +31,8 @@ void init () {
 
   turnOffScreen();
   start();
+  initMusic();
+  playSong(1);
   turnOnScreen();
 
   while(1) {

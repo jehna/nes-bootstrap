@@ -4,7 +4,7 @@ mkdir -p tmp
 
 # cc65 -Oi --add-source src/main.c -o tmp/main.s
 find src -name *.c | xargs -I {} sh -c 'cc65 -Oirs --add-source {} -o tmp/`basename {} .c`.s'
-ca65 src/import_binary_files.s -o tmp/import_binary_files.o
+find src -name *.s | xargs -I {} sh -c 'ca65 {} -o tmp/`basename {} .s`.o'
 find tmp -name *.s | xargs -I {} ca65 {}
 
 ld65 -C nes.cfg -o game.nes tmp/*.o nes.lib

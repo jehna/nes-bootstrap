@@ -30,5 +30,4 @@ void start (void) {
  * Do all the hard-lifting work here that should not infer with the frame rate.
  */
 void mainLoop (void) {
-
 }
