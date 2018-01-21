@@ -31,6 +31,7 @@ void init () {
 
   turnOffScreen();
   initMusic();
+  initSoundEffects();
   start();
   turnOnScreen();
 
