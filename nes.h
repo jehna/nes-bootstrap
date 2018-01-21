@@ -204,3 +204,14 @@
   CHR_ROM_SIZE_KB / 8
   // TODO: The full iNES file format header:
   // https://wiki.nesdev.com/w/index.php/INES#iNES_file_format
+
+/**
+ * Sprite flags
+ */
+#define SPRITE_FLAG_USE_PALETTE_1     0
+#define SPRITE_FLAG_USE_PALETTE_2     1
+#define SPRITE_FLAG_USE_PALETTE_3     2
+#define SPRITE_FLAG_USE_PALETTE_4     3
+#define SPRITE_FLAG_BEHIND_BACKGROUND 1 << 5
+#define SPRITE_FLAG_FLIP_HORIZONTALLY 1 << 6
+#define SPRITE_FLAG_FLIP_VERTICALLY   1 << 7

@@ -1,4 +1,5 @@
 #include "character.h"
+#include "../../nes.h"
 #include "../nes/sprite.h"
 #include "../nes/controller.h"
 #include "../nes/sounds.h"
@@ -8,8 +9,10 @@ unsigned int playerPosition = 0;
 void updateCharacterPos (void) {
   if (Input.player1.Right) {
     ++playerPosition;
+    Sprites[1].flags = Sprites[0].flags &= ~SPRITE_FLAG_FLIP_HORIZONTALLY;
   } else if (Input.player1.Left) {
     --playerPosition;
+    Sprites[1].flags = Sprites[0].flags |= SPRITE_FLAG_FLIP_HORIZONTALLY;
   }
 
   if (Input.player1.A) {
