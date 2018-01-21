@@ -2,6 +2,7 @@
 #include "../main.h"
 #include "controller.h"
 #include "utils.h"
+#include "sounds.h"
 
 
 void callMainUpdateFunction () {
@@ -12,6 +13,7 @@ void callMainUpdateFunction () {
  * vBlank gets called once per frame.
  */
 void vBlank () {
+  synchronizeMusicToFrame();
   readControllerInputs();
 
   callMainUpdateFunction();
@@ -28,6 +30,8 @@ void init () {
   DISABLE_DECIMAL_MODE(); // NES 6502 processor does not have a decimal mode
 
   turnOffScreen();
+  initMusic();
+  initSoundEffects();
   start();
   turnOnScreen();
 

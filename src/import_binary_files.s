@@ -1,6 +1,11 @@
-; Startup code for cc65/ca65
-.export __STARTUP__:absolute=1
+.export musicData, soundEffectData
 
 .segment "CHARS"
 ; ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ Add your imported sprite files here
   .incbin "sprites/alphabet.chr"
+
+.segment "RODATA"
+musicData:
+  .include "sounds/TestMusic.s"
+soundEffectData:
+	.include "sounds/SoundFx.s"

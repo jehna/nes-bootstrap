@@ -1011,6 +1011,10 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
+jsnes@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/jsnes/-/jsnes-0.3.0.tgz#eece1635a522b273ff54bd461e2d33c372169f08"
+
 json-parse-better-errors@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-parse-better-errors/-/json-parse-better-errors-1.0.1.tgz#50183cd1b2d25275de069e9e71b467ac9eab973a"

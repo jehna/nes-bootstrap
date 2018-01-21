@@ -1,6 +1,7 @@
 #include "character.h"
 #include "../nes/sprite.h"
 #include "../nes/controller.h"
+#include "../nes/sounds.h"
 
 unsigned int playerPosition = 0;
 
@@ -9,6 +10,10 @@ void updateCharacterPos (void) {
     ++playerPosition;
   } else if (Input.player1.Left) {
     --playerPosition;
+  }
+
+  if (Input.player1.A) {
+    playSample(0);
   }
   Sprites[1].xPos = Sprites[0].xPos = playerPosition + 0x80;
 }

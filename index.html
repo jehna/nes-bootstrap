@@ -1,6 +1,6 @@
 <html>
 <head>
-  <script type="text/javascript" src="https://unpkg.com/jsnes/dist/jsnes.min.js"></script>
+  <script type="text/javascript" src="/node_modules/jsnes/dist/jsnes.min.js"></script>
   <style>
     html {
       min-height: 100%;
@@ -24,7 +24,8 @@
       const canvas = createCanvas(256, 240)
       const ctx = canvas.getContext('2d')
       const onFrame = writeFrameToCanvas(ctx)
-      const nes = new jsnes.NES({ onFrame, onAudioSample })
+      const onAudioSample = createAudioSampler()
+      const nes = new jsnes.NES({ onFrame, onAudioSample, onStatusUpdate })
       nes.ppu.clipToTvSize = false
 
       bindKeys(nes)
@@ -63,8 +64,8 @@
       }
     }
 
-    function onAudioSample(left, right) {
-      // TODO: play audio sample
+    function onStatusUpdate(...args) {
+      console.log(...args)
     }
 
     async function loadGame (filename) {
@@ -114,6 +115,43 @@
       bindKey('keydown', 'buttonDown', nes)
       bindKey('keyup', 'buttonUp', nes)
     }
+
+    function createAudioSampler () {
+      const audioCtx = new AudioContext()
+      const scriptNode = audioCtx.createScriptProcessor(1024, 0, 2)
+      const audioBuffers = {
+        left: [],
+        right: []
+      }
+
+      scriptNode.onaudioprocess = connectOutputBuffers(audioBuffers)
+      scriptNode.connect(audioCtx.destination)
+
+      return function onAudioSample(left, right) {
+        audioBuffers.left.push(left)
+        audioBuffers.right.push(right)
+      }
+    }
+
+    function connectOutputBuffers (buffers) {
+      return function onAudioFrame (e) {
+        const left = e.outputBuffer.getChannelData(0)
+        const right = e.outputBuffer.getChannelData(1)
+
+        if (buffers.left.length < left.length) {
+          for(let i = 0; i < left.length; i++) {
+            // Buffer underrun, fill with 0
+            left[i] = right[i] = 0
+          }
+        } else {
+          for(let i = 0; i < left.length; i++) {
+            left[i] = buffers.left.shift()
+            right[i] = buffers.right.shift()
+          }
+        }
+      }
+    }
+
   </script>
 </body>
 </html>

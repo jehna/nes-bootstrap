@@ -2,6 +2,7 @@
 #include "nes/utils.h"
 #include "components/character.h"
 #include "components/helloworld.h"
+#include "components/bg_music.h"
 #include "config/palettes.h"
 
 
@@ -21,6 +22,7 @@ void start (void) {
   loadDefaultPalettes();
   startCharacter();
   startHelloWorld();
+  startBgMusic();
   resetScrollPosition();
 };
 
@@ -30,5 +32,4 @@ void start (void) {
  * Do all the hard-lifting work here that should not infer with the frame rate.
  */
 void mainLoop (void) {
-
 }
