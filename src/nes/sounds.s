@@ -1,6 +1,6 @@
 ; This file only acts as a bridge between the Famitone 2 tracker and the C code.
 
-.export _synchronizeMusicToFrame, _initMusic, _playSong
+.export _synchronizeMusicToFrame, _initMusic, _playSong, _stopSong
 .import musicData, _famitoneVariablePointer
 
 ; Settings:
@@ -32,4 +32,8 @@ _initMusic:
 
 _playSong:
   JMP FamiToneMusicPlay
+  RTS
+
+_stopSong:
+  JMP FamiToneMusicStop
   RTS
