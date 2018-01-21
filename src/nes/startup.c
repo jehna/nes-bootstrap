@@ -30,9 +30,8 @@ void init () {
   DISABLE_DECIMAL_MODE(); // NES 6502 processor does not have a decimal mode
 
   turnOffScreen();
-  start();
   initMusic();
-  playSong(1);
+  start();
   turnOnScreen();
 
   while(1) {
