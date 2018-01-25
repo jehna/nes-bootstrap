@@ -2,9 +2,9 @@
 #include "../../nes.h"
 
 const unsigned char PALETTE[]={
-  PALETTE_COLOR_LIGHT_GRAY,
   PALETTE_COLOR_DARK_GRAY,
-  PALETTE_COLOR_WHITE
+  PALETTE_COLOR_WHITE,
+  PALETTE_COLOR_LIGHT_GRAY
 };
 
 void loadDefaultPalettes (void) {

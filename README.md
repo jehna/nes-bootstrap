@@ -61,6 +61,8 @@ Using this project you will be able to:
   input from the first minute
 * See updates in seconds via the browser-based emulator
 * Use words instead of hex-codes (NO magic numbers!)
+* Converts .png files automatically to .chr sprites via
+  [img2chr](https://github.com/jehna/img2chr)
 
 This project has been constructed from different how-to's and sample codes.
 

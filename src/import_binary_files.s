@@ -2,7 +2,7 @@
 
 .segment "CHARS"
 ; ⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇ Add your imported sprite files here
-  .incbin "sprites/alphabet.chr"
+  .incbin "sprites/sprites.chr"
 
 .segment "RODATA"
 musicData:
